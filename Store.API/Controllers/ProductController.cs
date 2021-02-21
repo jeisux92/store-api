@@ -7,38 +7,36 @@ namespace Store.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CustomerController : Controller
+    public class ProductController : Controller
     {
-        private readonly ICustomerService _customerService;
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService) => _productService = productService;
 
-        public CustomerController(ICustomerService customerService)
-        {
-            _customerService = customerService;
-        }
 
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _customerService.GetCustomerAsync(id));
+            return Ok(await _productService.GetProductAsync(id));
         }
         
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _customerService.GetAllCustomerAsync());
+            return Ok(await _productService.GetAllProductAsync());
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(Customer customer)
+        public async Task<IActionResult> Post(Product product)
         {
-            if (!await _customerService.CustomerExistsAsync(customer.Id))
+            if (!await _productService.ProductExistsAsync(product.Id))
             {
                 return BadRequest("Customer is already created");
             }
             else
             {
-                await _customerService.CreateCustomerAsync(customer);
+                await _productService.CreateProductAsync(product);
                 return Ok();
             }
         }

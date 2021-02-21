@@ -15,6 +15,7 @@ namespace Store.API
     public class Startup
     {
         private IConfiguration _configuration;
+        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -29,7 +30,20 @@ namespace Store.API
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IProductService, ProductService>();
+            
             services.AddScoped<IDbConnection>(x => new SqlConnection(connectionString));
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("*")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddControllers();
         }
 
@@ -42,6 +56,8 @@ namespace Store.API
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
