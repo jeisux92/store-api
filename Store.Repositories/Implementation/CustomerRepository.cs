@@ -12,17 +12,16 @@ namespace Store.Repositories.Implementation
         }
 
 
-        public override async Task CreateAsync(Customer entity)
+        public override async Task<int> CreateAsync(Customer entity)
         {
-            var parameters = new 
+            var parameters = new
             {
                 Name = entity.Name,
                 Phone = entity.Phone,
                 IdentificationNumber = entity.IdentificationNumber,
                 LastName = entity.LastName
             };
-            await _connection.ExecuteAsync($"CustomerCreate", parameters, commandType: CommandType.StoredProcedure);
-
+            return await _connection.ExecuteAsync($"CustomerCreate", parameters, commandType: CommandType.StoredProcedure);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Store.Repositories.Implementation
             await _connection.QueryAsync<T>($"{typeof(T).Name}GetAll",
                 commandType: CommandType.StoredProcedure);
 
-        public virtual async Task CreateAsync(T entity) =>
+        public virtual async Task<int> CreateAsync(T entity) =>
             await _connection.ExecuteAsync($"{typeof(T).Name}Create", entity, commandType: CommandType.StoredProcedure);
 
 

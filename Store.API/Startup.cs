@@ -28,10 +28,13 @@ namespace Store.API
             string connectionString = _configuration.GetConnectionString("Store");
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<IBillRepository, BillRepository>();
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();
-            
+            services.AddScoped<ISaleService, SaleService>();
+
             services.AddScoped<IDbConnection>(x => new SqlConnection(connectionString));
 
             services.AddCors(options =>
@@ -44,7 +47,8 @@ namespace Store.API
                             .AllowAnyMethod();
                     });
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

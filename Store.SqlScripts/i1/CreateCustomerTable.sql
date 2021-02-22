@@ -11,12 +11,11 @@ BEGIN
 
 CREATE TABLE dbo.Customer(
     Id INT IDENTITY(1,1) NOT NULL,
-    IdentificationNumber BIGINT NOT NULL,
+    IdentificationNumber BIGINT NOT NULL PRIMARY KEY,
     [Name] VARCHAR(250) NOT NULL,
     LastName VARCHAR(250) NOT NULL,
     Phone BIGINT,
-    State BIT NOT NULL,
-    CONSTRAINT PK_Id_IdentificationNumber PRIMARY KEY NONCLUSTERED ([IdentificationNumber], [Id])
+    State BIT NOT NULL
 );
 
 END

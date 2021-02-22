@@ -7,7 +7,7 @@ namespace Store.Repositories
     {
         Task<T> GetByIdAsync<TU>(TU id);
         Task<IEnumerable<T>> GetAllAsync();
-        Task CreateAsync(T entity);
+        Task<int> CreateAsync(T entity);
         Task DeleteAsync<TU>(TU id);
         Task EditAsync(T entity);
     }

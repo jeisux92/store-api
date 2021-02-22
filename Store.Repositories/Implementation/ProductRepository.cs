@@ -11,14 +11,14 @@ namespace Store.Repositories.Implementation
         {
         }
 
-        public override async Task CreateAsync(Product entity)
+        public override async Task<int> CreateAsync(Product entity)
         {
             var parameters = new
             {
                 entity.Name,
                 entity.UnitValue
             };
-            await _connection.ExecuteAsync($"ProductCreate", parameters, commandType: CommandType.StoredProcedure);
+            return await _connection.ExecuteAsync($"ProductCreate", parameters, commandType: CommandType.StoredProcedure);
         }
     }
 }
